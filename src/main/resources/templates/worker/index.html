@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+</head>
+<body>
+
+<div>
+  <a class="btn add" href="/worker/create">Add</a>
+  <a class="btn deleteAll" href="/worker/deleteAll">deleteAll</a>
+</div>
+<h1>worker list</h1>
+<table th:if="${!listWorkers.isEmpty()}" border="1">
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Position</th>
+  </tr>
+
+
+  <tr th:each="worker : ${listWorkers}">
+    <td th:text="${worker.getId()}"></td>
+    <td th:text="${worker.getName()}"></td>
+    <td th:text="${worker.getPosition()}"></td>
+
+  </tr>
+
+</table>
+<p th:if="${listWorkers.isEmpty()}">listWorkers are empty</p>
+
+
+</body>
+</html>
