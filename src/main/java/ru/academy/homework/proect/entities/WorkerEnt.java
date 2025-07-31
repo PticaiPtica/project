@@ -2,6 +2,8 @@ package ru.academy.homework.proect.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Comparator;
+
 @Entity
 public class WorkerEnt {
     @Id
@@ -75,5 +77,11 @@ public class WorkerEnt {
                 ", email='" + email + '\'' +
                 ", positions=" + positions +
                 '}';
+    }
+    public static class WorkerEntComparator implements Comparator<WorkerEnt> {
+        @Override
+        public int compare(WorkerEnt o1, WorkerEnt o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
     }
 }
