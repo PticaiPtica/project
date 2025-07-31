@@ -15,7 +15,9 @@
     </label>
     <br>
     <label>Email : </label>
-    <input th:field="*{email}" type="email">
+    <label>
+        <input th:field="*{email}" type="email">
+    </label>
 
     <br>
     <label>Position : </label>
@@ -25,7 +27,7 @@
             <option th:each="option : ${positions}" th:value="${option.id}" th:text="${option}"></option>
         </select>
     </label>
-    </label>
+
     <br>
 
     <div>
