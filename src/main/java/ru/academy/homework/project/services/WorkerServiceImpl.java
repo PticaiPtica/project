@@ -3,9 +3,10 @@ package ru.academy.homework.project.services;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.academy.homework.project.entity.PositionEnt;
+import ru.academy.homework.project.entity.WorkerEnt;
 import ru.academy.homework.project.exception.NotFoundException;
 import ru.academy.homework.project.mapstruct.WorkerMapper;
-import ru.academy.homework.project.model.WorkerEnt;
+
 import ru.academy.homework.project.modelsDto.WorkerDTO;
 import ru.academy.homework.project.repository.PositionRepository;
 import ru.academy.homework.project.repository.WorkerRepository;

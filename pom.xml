@@ -107,7 +107,7 @@
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
+                            <version>1.5.5.Final</version>
                         </path>
                         <!-- Для Lombok, если используется -->
                         <path>

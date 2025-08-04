@@ -1,10 +1,10 @@
-package ru.academy.homework.project.model;
+package ru.academy.homework.project.entity;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.academy.homework.project.entity.PositionEnt;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,9 +41,10 @@ public class WorkerEnt {
     @Column(name = "employment_date", nullable = false)
     private LocalDate employmentDate;
 
-    @Column(precision = 12, scale = 2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal salary;
 
+    // ▼▼▼ ВСТАВЬТЕ ЭТОТ БЛОК КОДА ЗДЕСЬ ▼▼▼
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "position_id", nullable = false)
     private PositionEnt position;
