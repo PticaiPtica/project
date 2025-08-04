@@ -4,6 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.academy.homework.project.entity.PositionEnt;
 
-@Repository
-public interface PositionRepository extends JpaRepository<PositionEnt, Integer> {
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
+public interface PositionRepository extends JpaRepository<PositionEnt, Long> {
+    Optional<PositionEnt> findByPositionName(String name);
+
+    List<PositionEnt> findByMinSalaryGreaterThanEqual(BigDecimal minSalary);
 }

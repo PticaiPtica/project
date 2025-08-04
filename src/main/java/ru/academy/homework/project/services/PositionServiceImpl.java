@@ -1,56 +1,64 @@
 package ru.academy.homework.project.services;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.academy.homework.project.entity.PositionEnt;
-import ru.academy.homework.project.modelsDto.PositionDto;
+import ru.academy.homework.project.mapstruct.PositionMapper;
+import ru.academy.homework.project.modelsDto.PositionDTO;
+
 import ru.academy.homework.project.repository.PositionRepository;
 
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
+@RequiredArgsConstructor
 public class PositionServiceImpl implements PositionService {
-
-    @Autowired
-    private final PositionRepository positionRepository;
-
-    public PositionServiceImpl(PositionRepository positionRepository) {
-        this.positionRepository = positionRepository;
-    }
-
+    private final PositionRepository repository;
+    private final PositionMapper mapper;
 
     @Override
-    public Optional<Boolean> save(PositionEnt positionDto) {
-
-
-        return Optional.of(true);
+    @Transactional
+    public PositionDTO create(PositionDTO dto) {
+        PositionEnt entity = mapper.toEntity(dto);
+        return mapper.toDto(repository.save(entity));
     }
 
     @Override
-    public Optional<PositionDto> update(PositionDto positionDto) {
-        return Optional.empty();
+    @Transactional(readOnly = true)
+    public PositionDTO getById(Long id) {
+        return mapper.toDto(repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Position not found")));
     }
 
     @Override
-    public Optional<PositionDto> delete(PositionDto positionDto) {
-        return Optional.empty();
+    public List<PositionDTO> getAll() {
+        return List.of();
     }
 
     @Override
-    public Optional<PositionDto> findById(Long id) {
-        return Optional.empty();
+    @Transactional
+    public PositionDTO update(Long id, PositionDTO dto) {
+        PositionEnt entity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Position not found"));
+        mapper.updatePositionFromDto(dto, entity);
+        return mapper.toDto(repository.save(entity));
     }
 
     @Override
-    public List<PositionDto> findAll() {
-        return List.of((PositionDto) positionRepository.findAll());
+    public void delete(Long id) {
+
     }
 
     @Override
-    public Boolean deleteById(Long id) {
-        return null;
+    public List<PositionDTO> findBySalaryRange(BigDecimal min, BigDecimal max) {
+        return List.of();
     }
 }

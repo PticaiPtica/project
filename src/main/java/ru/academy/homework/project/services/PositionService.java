@@ -1,26 +1,16 @@
 package ru.academy.homework.project.services;
 
 
+import ru.academy.homework.project.modelsDto.PositionDTO;
 
-import ru.academy.homework.project.entity.PositionEnt;
-import ru.academy.homework.project.modelsDto.PositionDto;
-
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface PositionService {
-
-    Optional<Boolean> save(PositionEnt positionDto);
-
-    Optional<PositionDto> update(PositionDto positionDto);
-
-    Optional<PositionDto> delete(PositionDto positionDto);
-
-    Optional<PositionDto> findById(Long id);
-
-    List<PositionDto> findAll();
-
-    Boolean deleteById(Long id);
-
-
+    PositionDTO create(PositionDTO dto);
+    PositionDTO getById(Long id);
+    List<PositionDTO> getAll();
+    PositionDTO update(Long id, PositionDTO dto);
+    void delete(Long id);
+    List<PositionDTO> findBySalaryRange(BigDecimal min, BigDecimal max);
 }
