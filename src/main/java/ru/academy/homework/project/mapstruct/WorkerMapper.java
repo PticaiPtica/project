@@ -6,53 +6,24 @@ import ru.academy.homework.project.model.Worker;
 import ru.academy.homework.project.model.WorkerEnt;
 import ru.academy.homework.project.modelsDto.WorkerDTO;
 
-@Mapper(componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface WorkerMapper {
-
     @Mapping(target = "position", ignore = true)
-    WorkerEnt toEntity(WorkerDTO workerDTO);
+    WorkerEnt toEntity(WorkerDTO dto);
 
     @Mapping(target = "positionId", source = "position.id")
     @Mapping(target = "positionName", source = "position.positionName")
-    WorkerDTO toDto(WorkerEnt workerEnt);
+    WorkerDTO toDto(WorkerEnt entity);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    default void updateWorkerFromDto(WorkerDTO workerDTO, @MappingTarget WorkerEnt workerEnt) {
-        if (workerDTO.getName() != null) {
-            workerEnt.setName(workerDTO.getName());
-        }
-        if (workerDTO.getSurname() != null) {
-            workerEnt.setSurname(workerDTO.getSurname());
-        }
-        if (workerDTO.getPatronymic() != null) {
-            workerEnt.setPatronymic(workerDTO.getPatronymic());
-        }
-        if (workerDTO.getBirthDate() != null) {
-            workerEnt.setBirthDate(workerDTO.getBirthDate());
-        }
-        if (workerDTO.getPhone() != null) {
-            workerEnt.setPhone(workerDTO.getPhone());
-        }
-        if (workerDTO.getEmail() != null) {
-            workerEnt.setEmail(workerDTO.getEmail());
-        }
-        if (workerDTO.getEmploymentDate() != null) {
-            workerEnt.setEmploymentDate(workerDTO.getEmploymentDate());
-        }
-        if (workerDTO.getSalary() != null) {
-            workerEnt.setSalary(workerDTO.getSalary());
-        }
-    }
 
     @AfterMapping
-    default void setAdditionalFields(WorkerEnt workerEnt, @MappingTarget WorkerDTO workerDTO) {
-        if (workerEnt.getPosition() != null) {
-            workerDTO.setPositionId(workerEnt.getPosition().getId());
-            workerDTO.setPositionName(workerEnt.getPosition().getPositionName());
-        }
-        if (workerEnt.getCreatedAt() != null) {
-            workerDTO.setCreatedAt(workerEnt.getCreatedAt());
+    default void setPositionDetails(WorkerEnt source, @MappingTarget WorkerDTO target) {
+        if (source.getPosition() != null) {
+            target.setPositionId(source.getPosition().getId());
+            target.setPositionName(source.getPosition().getPositionName());
         }
     }
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateWorkerFromDto(WorkerDTO workerDTO, @MappingTarget WorkerEnt workerEnt);
 }
