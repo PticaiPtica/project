@@ -72,14 +72,6 @@ public class WorkerController {
         return "worker/index";
     }
 
-    @GetMapping("/sort")
-    public String sort(Model model) {
-
-        List<WorkerEnt> list = workerRepository.findAll();
-        list.sort(new WorkerEnt.WorkerEntComparator());
-        model.addAttribute("workers", list);
-        return "worker/index";
-    }
 
     @GetMapping("/create")
     public String create(Model model) {
@@ -102,7 +94,7 @@ public class WorkerController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable int id) {
+    public String edit(Model model, @PathVariable Long id) {
         Optional<WorkerEnt> workerEnt = workerRepository.findById(id);
         model.addAttribute("worker", workerEnt.get());
         model.addAttribute("positions", positionRepository.findAll());
@@ -116,14 +108,14 @@ public class WorkerController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteById(Model model, @PathVariable Integer id) {
+    public String deleteById(Model model, @PathVariable Long id) {
         positionRepository.deleteById(id);
         return "redirect:/worker/home";
     }
 
     @ResponseBody
     @DeleteMapping("/api/delete/{id}")
-    public String deleteByIdAjax(@PathVariable int id) {
+    public String deleteByIdAjax(@PathVariable Long id) {
         Optional<WorkerEnt> removeWorker = workerRepository.findById(id);
         if (removeWorker.isPresent()) {
             workerRepository.delete(removeWorker.get());

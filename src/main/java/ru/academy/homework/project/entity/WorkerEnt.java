@@ -1,41 +1,51 @@
 package ru.academy.homework.project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Comparator;
 
 @Entity
-public class WorkerEnt {
+@Table(name = "workers", indexes = {
+        @Index(name = "idx_worker_email", columnList = "email", unique = true),
+        @Index(name = "idx_worker_position", columnList = "position_id")
+})
+public class WorkerEnt extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, name = "name")
+    @NotBlank
     private String name;
 
-    @Column(unique = true, nullable = false)
+    @NotBlank
+    private String surname;
+
+    private String patronymic;
+
+    @Past
+    private LocalDate birthDate;
+
+    @Pattern(regexp = "^\\+?[0-9\\-\\s()]{7,20}$")
+    private String phone;
+
+    @Email
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "position_id")
-    private PositionEnt positions;
+    @PastOrPresent
+    private LocalDate employmentDate;
 
-    public WorkerEnt(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
+    @Column(columnDefinition = "DECIMAL(10,2)")
+    private BigDecimal salary;
 
-    public WorkerEnt() {
-    }
-
-    public WorkerEnt(String name, String email, PositionEnt positions) {
-        this.name = name;
-        this.email = email;
-        this.positions = positions;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id", nullable = false)
+    private PositionEnt position;
 
 
-
+    // getters, setters, toString()
 
     public Long getId() {
         return id;
@@ -45,28 +55,76 @@ public class WorkerEnt {
         this.id = id;
     }
 
-    public String getName() {
+    public @NotBlank String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotBlank String name) {
         this.name = name;
     }
 
-    public String getEmail() {
+    public @NotBlank String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(@NotBlank String surname) {
+        this.surname = surname;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public @Past LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(@Past LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public @Pattern(regexp = "^\\+?[0-9\\-\\s()]{7,20}$") String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(@Pattern(regexp = "^\\+?[0-9\\-\\s()]{7,20}$") String phone) {
+        this.phone = phone;
+    }
+
+    public @Email String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@Email String email) {
         this.email = email;
     }
 
-    public PositionEnt getPosition() {
-        return positions;
+    public @PastOrPresent LocalDate getEmploymentDate() {
+        return employmentDate;
     }
 
-    public void setPosition(PositionEnt positions) {
-        this.positions = positions;
+    public void setEmploymentDate(@PastOrPresent LocalDate employmentDate) {
+        this.employmentDate = employmentDate;
+    }
+
+    public BigDecimal getSalary() {
+        return salary;
+    }
+
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
+    }
+
+    public PositionEnt getPosition() {
+        return position;
+    }
+
+    public void setPosition(PositionEnt position) {
+        this.position = position;
     }
 
     @Override
@@ -74,14 +132,14 @@ public class WorkerEnt {
         return "WorkerEnt{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", birthDate=" + birthDate +
+                ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", positions=" + positions +
+                ", employmentDate=" + employmentDate +
+                ", salary=" + salary +
+                ", position=" + position +
                 '}';
-    }
-    public static class WorkerEntComparator implements Comparator<WorkerEnt> {
-        @Override
-        public int compare(WorkerEnt o1, WorkerEnt o2) {
-            return o1.getName().compareTo(o2.getName());
-        }
     }
 }
