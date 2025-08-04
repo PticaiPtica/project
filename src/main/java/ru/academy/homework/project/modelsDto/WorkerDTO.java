@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkerDTO {
+
     private Long id;
 
     @NotBlank(message = "Имя обязательно для заполнения")
