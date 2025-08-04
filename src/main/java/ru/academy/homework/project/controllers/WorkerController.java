@@ -1,17 +1,13 @@
-package ru.academy.homework.proect.controllers;
+package ru.academy.homework.project.controllers;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.Name;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.academy.homework.proect.entities.PositionEnt;
-import ru.academy.homework.proect.entities.WorkerEnt;
-import ru.academy.homework.proect.repository.PositionRepository;
-import ru.academy.homework.proect.repository.WorkerRepository;
-import ru.academy.homework.proect.repository.WorkerSortRepository;
+import ru.academy.homework.project.entity.WorkerEnt;
+import ru.academy.homework.project.repository.PositionRepository;
+import ru.academy.homework.project.repository.WorkerRepository;
+import ru.academy.homework.project.repository.WorkerSortRepository;
 
 import java.util.*;
 

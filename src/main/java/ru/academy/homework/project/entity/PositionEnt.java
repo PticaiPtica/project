@@ -1,4 +1,4 @@
-package ru.academy.homework.proect.entities;
+package ru.academy.homework.project.entity;
 
 import jakarta.persistence.*;
 

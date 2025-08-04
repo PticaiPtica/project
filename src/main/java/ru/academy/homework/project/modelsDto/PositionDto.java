@@ -1,8 +1,8 @@
-package ru.academy.homework.proect.modelsDto;
+package ru.academy.homework.project.modelsDto;
 
 
 
-import ru.academy.homework.proect.models.Worker;
+import ru.academy.homework.project.model.Worker;
 
 import java.util.List;
 

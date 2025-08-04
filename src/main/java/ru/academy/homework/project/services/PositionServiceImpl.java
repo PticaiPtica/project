@@ -1,11 +1,11 @@
-package ru.academy.homework.proect.services;
+package ru.academy.homework.project.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.academy.homework.proect.entities.PositionEnt;
-import ru.academy.homework.proect.modelsDto.PositionDto;
-import ru.academy.homework.proect.repository.PositionRepository;
+import ru.academy.homework.project.entity.PositionEnt;
+import ru.academy.homework.project.modelsDto.PositionDto;
+import ru.academy.homework.project.repository.PositionRepository;
 
 
 import java.util.List;

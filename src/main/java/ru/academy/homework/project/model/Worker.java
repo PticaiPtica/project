@@ -1,4 +1,4 @@
-package ru.academy.homework.proect.models;
+package ru.academy.homework.project.model;
 
 public class Worker {
     private long id;
