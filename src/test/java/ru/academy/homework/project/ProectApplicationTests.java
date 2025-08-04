@@ -1,4 +1,4 @@
-package ru.academy.homework.proect;
+package ru.academy.homework.project;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

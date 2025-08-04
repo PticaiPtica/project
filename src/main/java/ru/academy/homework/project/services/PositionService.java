@@ -1,9 +1,9 @@
-package ru.academy.homework.proect.services;
+package ru.academy.homework.project.services;
 
 
 
-import ru.academy.homework.proect.entities.PositionEnt;
-import ru.academy.homework.proect.modelsDto.PositionDto;
+import ru.academy.homework.project.entity.PositionEnt;
+import ru.academy.homework.project.modelsDto.PositionDto;
 
 import java.util.List;
 import java.util.Optional;

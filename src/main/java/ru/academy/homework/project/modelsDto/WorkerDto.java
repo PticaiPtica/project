@@ -1,7 +1,7 @@
-package ru.academy.homework.proect.modelsDto;
+package ru.academy.homework.project.modelsDto;
 
 
-import ru.academy.homework.proect.models.Position;
+import ru.academy.homework.project.model.Position;
 
 public class WorkerDto {
 

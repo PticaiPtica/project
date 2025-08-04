@@ -1,18 +1,15 @@
-package ru.academy.homework.proect.controllers;
+package ru.academy.homework.project.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.academy.homework.proect.entities.PositionEnt;
-import ru.academy.homework.proect.modelsDto.PositionDto;
-import ru.academy.homework.proect.repository.PositionRepository;
-import ru.academy.homework.proect.services.PositionService;
+import ru.academy.homework.project.entity.PositionEnt;
+import ru.academy.homework.project.repository.PositionRepository;
+import ru.academy.homework.project.services.PositionService;
 
 
 import java.util.List;
