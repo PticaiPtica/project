@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.academy.homework.project.entity.WorkerEnt;
+
+import ru.academy.homework.project.model.WorkerEnt;
 import ru.academy.homework.project.repository.PositionRepository;
 import ru.academy.homework.project.repository.WorkerRepository;
 import ru.academy.homework.project.repository.WorkerSortRepository;

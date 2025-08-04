@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>ru.academy.Home-Work</groupId>
+    <groupId>ru.academy.homework</groupId>
     <artifactId>project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -79,6 +79,7 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
