@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Edit worker</h1>
+
+
+<form th:action="@{/worker/create}" th:object="${worker}" method="post">
+  <input hidden th:field="*{id}" type="text">
+  <label>Name : </label>
+  <label>
+    <input th:field="*{name}" type="text">
+  </label>
+  <br>
+  <label>Email : </label>
+  <label>
+    <input th:field="*{email}" type="email">
+  </label>
+
+  <br>
+  <label>Position : </label>
+
+  <label>
+    <select th:field="*{position}">
+      <option th:each="option : ${positions}" th:value="${option.id}" th:text="${option}"></option>
+    </select>
+  </label>
+
+  <br>
+
+  <div>
+    <input type="submit" value="Save">
+    <a href="/worker/home">Cancel</a>
+  </div>
+</form>
+</body>
+</html>
