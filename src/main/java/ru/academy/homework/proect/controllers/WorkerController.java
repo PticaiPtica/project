@@ -1,18 +1,19 @@
 package ru.academy.homework.proect.controllers;
 
+import com.github.javafaker.Faker;
+import com.github.javafaker.Name;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.academy.homework.proect.entities.PositionEnt;
 import ru.academy.homework.proect.entities.WorkerEnt;
 import ru.academy.homework.proect.repository.PositionRepository;
 import ru.academy.homework.proect.repository.WorkerRepository;
+import ru.academy.homework.proect.repository.WorkerSortRepository;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/worker")
@@ -20,12 +21,67 @@ public class WorkerController {
     @Autowired
     private WorkerRepository workerRepository;
     @Autowired
+    private WorkerSortRepository workerSortRepository;
+    @Autowired
     private PositionRepository positionRepository;
 
+
     @GetMapping("/home")
-    public String home(Model model) {
-        List<WorkerEnt> listWorkers = workerRepository.findAll();
-        model.addAttribute("listWorkers", listWorkers);
+    public String home(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size,
+            Model model) {
+        List<WorkerEnt> list = workerRepository.findAll();
+        if (!list.isEmpty()) {
+            int totalWorkers = (int) workerRepository.count();
+            int totalPages = (int) Math.ceil((double) totalWorkers / size);
+            int fromIndex = (page - 1) * size;
+            int toIndex = fromIndex + size;
+
+            int sizePage = 10;
+            int startPage = Math.max(1, page - sizePage / 2);
+            int endPage = Math.min(startPage + sizePage, totalPages);
+
+            List<WorkerEnt> workers = list.subList(fromIndex, toIndex);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("workers", workers);
+            model.addAttribute("size", size);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("totalWorkers", totalWorkers);
+            model.addAttribute("currentPage", page);
+        } else {
+            model.addAttribute("workers", new ArrayList<>());
+
+        }
+        model.addAttribute("title", "Worker List");
+
+        return "worker/index";
+    }
+    @GetMapping("/home/filter")
+    public String filter(Model model) {
+        List<WorkerEnt> list = workerRepository.findAll();
+        List<WorkerEnt> filteredList = new ArrayList<>();
+        for (WorkerEnt worker : list) {
+
+        }
+        return "worker/index";
+    }
+
+    @GetMapping("/sort/{columIndex}")
+    public String home(Model model, @PathVariable int columIndex, String sort) {
+        List<WorkerEnt> list = workerRepository.findAll();
+        model.addAttribute("worker", list);
+        model.addAttribute("title", "Worker List");
+        return "worker/index";
+    }
+
+    @GetMapping("/sort")
+    public String sort(Model model) {
+
+        List<WorkerEnt> list = workerRepository.findAll();
+        list.sort(new WorkerEnt.WorkerEntComparator());
+        model.addAttribute("workers", list);
         return "worker/index";
     }
 
@@ -34,8 +90,8 @@ public class WorkerController {
 
 
         model.addAttribute("worker", new WorkerEnt());
-        System.out.println(model.addAttribute("worker", new WorkerEnt()));
-        //model.addAttribute("options", Arrays.stream(positionRepository.findAll().toArray()));
+
+
         model.addAttribute("positions", positionRepository.findAll());
 
         return "worker/create";
@@ -44,9 +100,17 @@ public class WorkerController {
     @PostMapping("/create")
     public String createPost(WorkerEnt workerEnt) {
 
-        System.out.println(":::::::::::::::");
+
         workerRepository.save(workerEnt);
         return "redirect:home";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable int id) {
+        Optional<WorkerEnt> workerEnt = workerRepository.findById(id);
+        model.addAttribute("worker", workerEnt.get());
+        model.addAttribute("positions", positionRepository.findAll());
+        return "worker/edit";
     }
 
     @GetMapping("/deleteAll")
@@ -54,4 +118,24 @@ public class WorkerController {
         workerRepository.deleteAll();
         return "redirect:home";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteById(Model model, @PathVariable Integer id) {
+        positionRepository.deleteById(id);
+        return "redirect:/worker/home";
+    }
+
+    @ResponseBody
+    @DeleteMapping("/api/delete/{id}")
+    public String deleteByIdAjax(@PathVariable int id) {
+        Optional<WorkerEnt> removeWorker = workerRepository.findById(id);
+        if (removeWorker.isPresent()) {
+            workerRepository.delete(removeWorker.get());
+            return "Worker deleted => " + removeWorker.get();
+        } else {
+            return "Worker deleted false";
+        }
+    }
+
+
 }
